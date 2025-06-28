@@ -41,7 +41,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #23243a 0%, #1a1b2f 100%);
+    background: linear-gradient(135deg, #23243a 0%, #18192b 100%);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;
@@ -103,90 +103,85 @@ body {
 .app-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 24px 32px 24px;
+    padding: 32px 12px 32px 12px;
 }
 
 /* Header */
 .header {
-    background: rgba(30, 32, 60, 0.98);
-    border-radius: 18px;
-    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.12);
-    margin-bottom: 32px;
-    padding: 32px 32px 18px 32px;
+    background: #1e1e2f;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 2px 16px 0 rgba(0,0,0,0.10);
+    margin-bottom: 0;
+    padding: 18px 32px 0 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
+    min-height: 64px;
 }
 
 .header-content {
-    flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 16px;
 }
 
 .header-content .logo {
     display: flex;
     align-items: center;
-    gap: 18px;
-    justify-content: center;
+    gap: 10px;
 }
 
 .header-content .logo i {
-    font-size: 2.5rem;
+    font-size: 1.7rem;
     color: #4f8cff;
 }
 
 .asset-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    letter-spacing: 1px;
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
     margin: 0;
-    text-align: center;
+    text-align: left;
+    color: #f5f6fa;
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    gap: 24px;
-    position: absolute;
-    right: 32px;
-    top: 50%;
-    transform: translateY(-50%);
+    gap: 18px;
+    margin-left: auto;
 }
 
 /* Navigation */
 .navigation {
     display: flex;
     align-items: center;
-    background: rgba(30, 32, 60, 0.95);
-    border-radius: 12px;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
-    padding: 0 24px;
-    margin-bottom: 40px;
-    min-height: 56px;
-    justify-content: center;
-    position: relative;
+    background: #23243a;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+    padding: 0 18px;
+    margin-bottom: 36px;
+    min-height: 48px;
+    justify-content: flex-start;
+    gap: 18px;
 }
 
 .nav-content {
     display: flex;
-    gap: 24px;
+    gap: 10px;
 }
 
 .nav-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     color: #bfc9e0;
     text-decoration: none;
     font-weight: 500;
-    font-size: 1.08rem;
-    padding: 10px 28px;
-    border-radius: 10px;
-    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    font-size: 1.01rem;
+    padding: 7px 18px;
+    border-radius: 8px;
+    transition: background 0.16s, color 0.16s, box-shadow 0.16s;
     background: transparent;
     position: relative;
 }
@@ -204,7 +199,7 @@ body {
 }
 
 .header-right .status-indicator {
-    margin-left: 12px;
+    margin-left: 8px;
 }
 
 .theme-switcher {
@@ -215,13 +210,13 @@ body {
 .status-indicator {
     display: flex;
     align-items: center;
-    gap: 7px;
-    font-size: 1.08rem;
+    gap: 6px;
+    font-size: 1.01rem;
 }
 
 .status-dot {
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: #4f8cff;
     display: inline-block;
@@ -231,7 +226,7 @@ body {
 
 /* Main Content */
 .main-content {
-    margin-top: 32px;
+    margin-top: 36px;
     padding: 0 8px;
 }
 
@@ -308,14 +303,21 @@ section h2::after {
 /* Asset Overview Section */
 .assets-grid {
     display: flex;
-    gap: 28px;
-    min-height: 120px;
-    background: rgba(40, 44, 70, 0.7);
-    border-radius: 14px;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
-    padding: 32px 24px;
+    gap: 24px;
     align-items: center;
     justify-content: center;
+    min-height: 80px;
+}
+
+.assets-grid:empty::after {
+    content: 'No asset data to display.';
+    color: #6c7a99;
+    font-size: 1.08rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+    width: 100%;
+    display: block;
+    padding: 32px 0;
 }
 
 .asset-card {
