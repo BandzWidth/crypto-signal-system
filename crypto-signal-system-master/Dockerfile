@@ -10,16 +10,8 @@ RUN apk add --no-cache python3 make g++
 COPY package*.json ./
 RUN npm ci --only=production && npm cache clean --force
 
-# Copy all source code
+# Copy all source code (including pre-built React app)
 COPY . .
-
-# Build React frontend
-WORKDIR /app/client
-RUN npm install
-RUN npm run build
-
-# Return to app directory
-WORKDIR /app
 
 # Create logs directory and set permissions
 RUN mkdir -p logs && chmod 755 logs
