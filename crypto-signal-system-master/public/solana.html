@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solana Trading Signals</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+</head>
+<body class="light-mode">
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-coins"></i>
+                    <h1 class="asset-title">Solana Dashboard</h1>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <div class="nav-flex">
+                <div class="nav-content">
+                    <a href="/" class="nav-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="/bitcoin" class="nav-item">
+                        <i class="fab fa-bitcoin"></i>
+                        <span>Bitcoin</span>
+                    </a>
+                    <a href="/ethereum" class="nav-item">
+                        <i class="fab fa-ethereum"></i>
+                        <span>Ethereum</span>
+                    </a>
+                    <a href="/solana" class="nav-item active">
+                        <i class="fas fa-coins"></i>
+                        <span>Solana</span>
+                    </a>
+                </div>
+                <div class="nav-actions">
+                    <div class="theme-switcher">
+                        <label class="switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="status-indicator">
+                        <span class="status-dot online"></span>
+                        <span class="status-text">Live</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Asset Stats -->
+            <section class="asset-stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <p class="stat-value" id="currentPrice">$0.00</p>
+                            <p class="stat-label">Current Price</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <p class="stat-value" id="marketCap">$0</p>
+                            <p class="stat-label">Market Cap</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <p class="stat-value" id="volume24h">$0</p>
+                            <p class="stat-label">24h Volume</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <p class="stat-value" id="high24h">$0.00</p>
+                            <p class="stat-label">24h High</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <p class="stat-value" id="low24h">$0.00</p>
+                            <p class="stat-label">24h Low</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <p class="stat-value" id="priceChange">0.00%</p>
+                            <p class="stat-label">Price Change (24h)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TradingView Chart -->
+            <section class="chart-section">
+                <div class="chart-header">
+                    <h2>Solana Chart</h2>
+                </div>
+                <div id="timeframe-controls-external" class="timeframe-controls-external"></div>
+                <div class="chart-container" id="tradingview-widget-container">
+                    <div id="tradingview-chart"></div>
+                </div>
+            </section>
+
+            <!-- Active Trades -->
+            <section class="trades-section">
+                <h2>Active Trades</h2>
+                <div class="trades-container" id="activeTrades">
+                    <div class="empty-state" id="activeTradesEmpty">
+                        <i class="fas fa-chart-line"></i>
+                        <p>No active trades at the moment</p>
+                        <span>New trading opportunities will appear here</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trade History -->
+            <section class="history-section">
+                <h2>Trade History</h2>
+                <div class="history-container">
+                    <div class="history-filters">
+                        <div class="filter-group">
+                            <select id="historyFilter" class="filter-select">
+                                <option value="all">All Trades</option>
+                                <option value="winning">Winning Trades</option>
+                                <option value="losing">Losing Trades</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <input type="date" id="historyDate" class="filter-date" placeholder="Filter by date">
+                        </div>
+                    </div>
+                    <div class="history-table-container">
+                        <table class="history-table" id="historyTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Strategy</th>
+                                    <th>Type</th>
+                                    <th>Entry Price</th>
+                                    <th>Exit Price</th>
+                                    <th>P&L</th>
+                                    <th>Duration</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Trade history will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Strategy Performance -->
+            <section class="strategy-section">
+                <h2>Strategy Performance</h2>
+                <div class="strategy-grid" id="strategyPerformance">
+                    <div class="empty-state" id="strategyEmpty">
+                        <i class="fas fa-brain"></i>
+                        <p>No strategy data available</p>
+                        <span>Strategy performance metrics will appear here</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Loading Solana data...</p>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/chartComponent.js"></script>
+    <script src="/js/solana.js"></script>
+    <script src="/js/theme.js"></script>
+</body>
+</html> 
