@@ -9,6 +9,7 @@ const path = require('path');
 const cron = require('node-cron');
 const moment = require('moment');
 const winston = require('winston');
+const fs = require('fs');
 require('dotenv').config();
 
 // Import trading modules
@@ -99,7 +100,18 @@ app.use(compression());
 app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve static files from React build if it exists
+const reactBuildPath = path.join(__dirname, 'client', 'build');
+if (fs.existsSync(reactBuildPath)) {
+  app.use(express.static(reactBuildPath));
+  // Serve React index.html for any unknown route
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(reactBuildPath, 'index.html'));
+  });
+} else {
+  app.use(express.static(path.join(__dirname, 'public')));
+}
 
 // Initialize trading components
 const dataProvider = new DataProvider();

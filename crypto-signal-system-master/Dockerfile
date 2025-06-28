@@ -1,5 +1,5 @@
 # Use Node.js 18 LTS as base image
-FROM node:18-alpine
+FROM node:18-alpine as build
 
 # Set working directory
 WORKDIR /app
@@ -7,14 +7,23 @@ WORKDIR /app
 # Install dependencies for native modules
 RUN apk add --no-cache python3 make g++
 
-# Copy package files first for better caching
+# Copy backend package files
 COPY package*.json ./
 
 # Install dependencies
 RUN npm ci --only=production && npm cache clean --force
 
-# Copy application code
+# Copy backend code
 COPY . .
+
+# Build React frontend
+WORKDIR /app/client
+COPY client/package*.json ./
+RUN npm install && npm run build
+
+# Move build output to backend
+WORKDIR /app
+RUN mkdir -p client/build && cp -r client/build /app/client/
 
 # Create logs directory and set permissions
 RUN mkdir -p logs && chmod 755 logs
