@@ -101,15 +101,8 @@ app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
 
-// Serve static files from React build if it exists
-const reactBuildPath = path.join(__dirname, 'client', 'build');
-if (fs.existsSync(reactBuildPath)) {
-  console.log('✅ React build found, serving from:', reactBuildPath);
-  app.use(express.static(reactBuildPath));
-} else {
-  console.log('⚠️ React build not found, serving from public directory');
-  app.use(express.static(path.join(__dirname, 'public')));
-}
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Initialize trading components
 const dataProvider = new DataProvider();
@@ -181,34 +174,23 @@ app.get('/health', (req, res) => {
   res.status(200).json({ 
     status: 'healthy', 
     timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    reactBuildExists: fs.existsSync(reactBuildPath)
+    uptime: process.uptime()
   });
 });
 
-// Serve React app for all other routes (must be last)
-if (fs.existsSync(reactBuildPath)) {
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(reactBuildPath, 'index.html'));
-  });
-} else {
-  // Fallback routes for when React build doesn't exist
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  });
-
-  app.get('/bitcoin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'bitcoin.html'));
-  });
-
-  app.get('/ethereum', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'ethereum.html'));
-  });
-
-  app.get('/solana', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'solana.html'));
-  });
-}
+// Serve dashboard and asset pages
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.get('/bitcoin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'bitcoin.html'));
+});
+app.get('/ethereum', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'ethereum.html'));
+});
+app.get('/solana', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'solana.html'));
+});
 
 // Scheduled tasks with intelligent timing
 cron.schedule('*/5 * * * *', async () => {
